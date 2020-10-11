@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { Card, Button, Form, FormControl } from 'react-bootstrap';
 
 import { bindActionCreators } from 'redux';
@@ -64,7 +62,7 @@ class StatementPageContainer extends Component {
         <Card style={{width: '100%'}}>
           <Card.Header>
             <Form inline>
-              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+              <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={() => {}} />
               <Button variant="outline-info">Search</Button>
             </Form>
           </Card.Header>
@@ -86,7 +84,7 @@ class StatementPageContainer extends Component {
                   <div>Description: {statement.description}</div>
                   <div>Amount: {statement.amount}</div>
                   <div>Status: <span style={{ color: statement.status === 'Approved' ? 'green' : statement.status === 'Rejected' ? 'red' : 'yellow' }} >{statement.status}</span></div>
-                  <Button variant="danger" style={{margin: '10px 20px 0 0'}} onClick={() => this.props.onRemoveStatement(index)} >Delete</Button>
+                  <Button variant="danger" style={{margin: '10px 20px 0 0'}} onClick={() => onRemoveStatement(index)} >Delete</Button>
                   <Button
                     style={{margin: '10px 20px 0 0'}}
                     onClick={() => {
@@ -103,8 +101,8 @@ class StatementPageContainer extends Component {
                   }}>Edit</Button>
                   {
                     currentUser.userType === 'ADMIN' && statement.status === 'Waiting' && <>
-                      <Button variant="info" style={{margin: '10px 0 0 0', float: 'right'}} onClick={() => this.props.onApproveStatement({status: 'Approved', index})} >Approved</Button>
-                      <Button variant="danger" style={{margin: '10px 20px 0 0', float: 'right'}} onClick={() => this.props.onApproveStatement({status: 'Rejected', index})} >Rejected</Button>
+                      <Button variant="info" style={{margin: '10px 0 0 0', float: 'right'}} onClick={() => onApproveStatement({status: 'Approved', index})} >Approved</Button>
+                      <Button variant="danger" style={{margin: '10px 20px 0 0', float: 'right'}} onClick={() => onApproveStatement({status: 'Rejected', index})} >Rejected</Button>
                     </>
                   }
                 </Card.Body>

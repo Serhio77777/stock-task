@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import addMonths from 'date-fns/addMonths';
-import classNames from 'classnames';
 
 const StockListTableRow = (props) => {
   const {

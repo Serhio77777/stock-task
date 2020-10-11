@@ -17,7 +17,6 @@ class ModalContainer extends Component {
       isOpen,
       onCloseModal,
       onAdd,
-      isLoading
     } = this.props;
 
     return (

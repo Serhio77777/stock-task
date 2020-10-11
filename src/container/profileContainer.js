@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, Form, Button } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import { changeProfile } from '../actions/user/actionCreators';
 
