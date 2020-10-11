@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   FormGroup,
   FormControl,
-  ControlLabel,
+  // ControlLabel,
 } from 'react-bootstrap';
 
 
@@ -17,9 +17,12 @@ class InputBox extends Component {
 
     return (
       <FormGroup>
-        {
+        {/* {
           label &&
           <ControlLabel>{label}</ControlLabel>
+        } */}
+        {
+          label
         }
         <FormControl
           type="text"

@@ -1,10 +1,9 @@
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Row,
   Col,
   Button,
-  Glyphicon,
 } from 'react-bootstrap';
 
 const StockListTableHeader = (props) => {
@@ -16,7 +15,7 @@ const StockListTableHeader = (props) => {
     <Row>
       <Col xs={12} md={10} />
       <Col xs={12} md={2}>
-        <Button onClick={onAdd}><Glyphicon glyph="plus-sign" /></Button>
+        <Button  variant="secondary" onClick={onAdd}>Add new item</Button>
       </Col>
     </Row>
   );
@@ -27,7 +26,7 @@ StockListTableHeader.defaultProps = {
 };
 
 StockListTableHeader.propTypes = {
-  onAdd: PropTypes.func.isRequired,
+  onAdd: PropTypes.func,
 };
 
 export default StockListTableHeader;

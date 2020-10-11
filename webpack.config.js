@@ -1,4 +1,5 @@
 const path = require('path');
+// const BavelPluginStyledComponents = require('babel-plugin-styled-components');
 
 module.exports = {
   entry: './src/app',
@@ -14,6 +15,7 @@ module.exports = {
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
     ],
   },
+  // plugins: ["babel-plugin-styled-components"],
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
   },

@@ -8,8 +8,7 @@ components.
 2.) You can also see the the parameter which are needed for using the comonents
  */
 
-import React from 'react';
-import { storiesOf, action } from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 
 /*
 import React Components for styling purposes without

@@ -1,4 +1,7 @@
 export const CHANGE_INPUT_TEXT = 'CHANGE_INPUT_TEXT';
+export const CHANGE_STOCK_ITEM = 'CHANGE_STOCK_ITEM';
 export const ADD_STOCK = 'ADD_STOCK';
+export const ADD_STOCK_ITEM = 'ADD_STOCK_ITEM';
 export const REMOVE_STOCK = 'REMOVE_STOCK';
+export const REMOVE_STOCK_ITEM = 'REMOVE_STOCK_ITEM';
 export const STOCK_FOUND = 'STOCK_FOUND';

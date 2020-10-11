@@ -8,6 +8,7 @@
   "scripts": {
     "heroku-postbuild": "yarn webpack",
     "dev": "webpack-dev-server --inline --progress",
+    "start:dev": "react-scripts start",
     "start": "node server.js",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "node ./node_modules/mocha/bin/mocha --compilers js:babel-core/register src/**/**/*.spec.js && node ./node_modules/mocha/bin/mocha --compilers js:babel-core/register src/**/*.spec.js --watch"
@@ -16,36 +17,53 @@
     "@kadira/storybook": "^2.35.3",
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
-    "babel-loader": "^6.4.1",
+    "babel-loader": "^8.0.1",
+    "babel-plugin-styled-components": "^1.11.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-react": "^6.23.0",
-    "eslint": "^3.18.0",
+    "eslint": "^6.6.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
-    "webpack": "^2.3.2",
-    "webpack-dev-server": "^2.4.2"
+    "webpack": "^4.42.0",
+    "webpack-dev-server": "3.11.0"
   },
   "dependencies": {
-    "axios": "^0.16.1",
+    "axios": "^0.20.0",
     "chai": "^3.5.0",
     "classnames": "^2.2.5",
+    "date-fns": "^2.16.1",
     "express": "^4.15.2",
     "fetch-readablestream": "^0.1.0",
     "graphql": "^0.9.6",
     "lodash": "^4.17.4",
     "mocha": "^3.3.0",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.7.2",
     "quandl": "^0.0.6",
-    "react": "^15.4.2",
+    "react": "^16.2.0",
     "react-addons-test-utils": "^15.4.2",
-    "react-bootstrap": "^0.30.8",
-    "react-dom": "^15.4.2",
+    "react-bootstrap": "^1.3.0",
+    "react-dom": "^16.2.0",
     "react-redux": "^5.0.3",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.3",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "uuid": "^3.0.1"
+    "styled-components": "^5.2.0",
+    "uuid": "^3.4.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

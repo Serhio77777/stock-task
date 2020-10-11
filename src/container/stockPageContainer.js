@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import uuidV1 from 'uuid/v1';
-
-import graphQL from '../utils/graphql';
+import {
+  Form,
+} from 'react-bootstrap';
 
 import {
   Page,
@@ -14,93 +15,113 @@ import {
   StocklistTable,
   StocklistTableRow,
   Button,
-  InputBox,
-  ListGroup,
-  ListGroupItem,
 } from '../components/atoms';
-
 import { openModal, closeModal, isLoading } from '../actions/modal/actionCreators';
-import { changeInputText, addStock, removeStock, stockFound } from '../actions/stock/actionCreators';
+import {
+  changeStockItem,
+  addStock,
+  addStockItem,
+  removeStockItem,
+  stockFound
+} from '../actions/stock/actionCreators';
 import Modal from './modalContainer';
 
 class StockPageContainer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      owner: '',
+      type: '',
+      amount: 0,
+      timeOut: null,
+      isEdit: false,
+      index: null
+    }
+  }
+
   render() {
     const {
       onOpenModal,
+      onRemoveStockItem,
+      onAddStockItem,
+      onChangeStockItem,
       onCloseModal,
-      onChangeInputText,
-      onAddStock,
-      onRemoveStock,
-      onStockFound,
       onLoading,
-      text,
       stocklist,
-      found,
     } = this.props;
-    const title = `Stocks Watchlist [${stocklist.length}]`;
-    const label = `Code ${!found ? `${text} not found` : ''}`;
-
+    const title = `Meet Stocks Watchlist [${stocklist.length}]`;
+    const indexStock = Number(window.location.href.split('/').pop())
     return (
       <Page>
         <PageHeader title={title} />
         <PageContainer>
           <StockListTableHeader
-            onAdd={() => onOpenModal()}
+            onAdd={() => {
+              this.setState({ isEdit: false, index: null });
+              onOpenModal();
+            }}
           />
           <StocklistTable>
             {
-              stocklist.map((stock, index) =>
+              stocklist[indexStock].list.map((stock, index) =>
                 <StocklistTableRow
                   index={index}
                   key={uuidV1()}
                   {...stock}
                 >
-                  <Button icon="trash" onClick={() => onRemoveStock(index)} />
-                </StocklistTableRow>
+                  <Button variant="danger" onClick={() => onRemoveStockItem({ indexStockItem: index, indexStock })} >Delete</Button>
+                  <Button onClick={() => {
+                    this.setState({
+                      owner: stock.ownerName,
+                      type: stock.type,
+                      amount: stock.amount,
+                      timeOut: stock.timeOut,
+                      isEdit: true,
+                      index
+                    },
+                    () => {
+                      onOpenModal();
+                    })
+                  }}>Edit</Button>
+                </StocklistTableRow >
                 )
             }
           </StocklistTable>
         </PageContainer>
         <Modal
           onAdd={() => {
-            onLoading(true);
-            graphQL({ code: text }).then(({ data }) => {
-              const { stock } = data;
-
-              if (stock) {
-                onCloseModal();
-                onAddStock(stock);
-                onChangeInputText('');
+            if (!Object.values(this.state).find(el => !el)) {
+              onLoading(true);
+              if (this.state.isEdit) {
+                onChangeStockItem({ ...this.state, indexStock, indexItem: this.state.index });
               } else {
-                onStockFound(false);
+                onAddStockItem({ ...this.state, index: indexStock });
               }
-              onLoading(false);
-            });
+              onCloseModal();
+            }
           }
         }
-          title={'New Stock to Watchlist'}
+          title={'New Stock Item'}
         >
-          <InputBox
-            label={label}
-            value={text}
-            onChange={(event) => {
-              !found && onStockFound(true);
-              onChangeInputText(event.target.value);
-              }
-            }
-            placeholder="code"
-          />
-          {
-            !found &&
-            <ListGroup>
-              <ListGroupItem bsStyle="danger">{`Stock with the code: ${text} was not found.`}</ListGroupItem>
-            </ListGroup>
-          }
-          <h5>Examples</h5>
-          <ul>
-            <li><strong>fb</strong> for Facebook</li>
-            <li><strong>msft</strong> for Microsoft</li>
-          </ul>
+          <Form style={{ padding: '10px' }}>
+            <Form.Group controlId="formBasicType">
+              <Form.Label>Type</Form.Label>
+              <Form.Control type="text" placeholder="Type" value={this.state.type} onChange={e => this.setState({ type: e.target.value })} />
+            </Form.Group>
+            <Form.Group controlId="formBasicOwner">
+              <Form.Label>Owner Name</Form.Label>
+              <Form.Control type="text" placeholder="Owner Name" value={this.state.owner} onChange={e => this.setState({ owner: e.target.value })} />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicAmount">
+              <Form.Label>Amount</Form.Label>
+              <Form.Control type="number" placeholder="Amount" value={this.state.amount} onChange={e => this.setState({ amount: e.target.value })} />
+            </Form.Group>
+            <Form.Group controlId="formBasicDateOut">
+              <Form.Label>Date Out</Form.Label>
+              <Form.Control type="text" placeholder="Date Out" value={this.state.timeOut} onChange={e => this.setState({ timeOut: e.target.value })} />
+            </Form.Group>
+          </Form>
         </Modal>
       </Page>
     );
@@ -110,13 +131,12 @@ class StockPageContainer extends Component {
 StockPageContainer.propTypes = {
   onOpenModal: PropTypes.func.isRequired,
   onCloseModal: PropTypes.func.isRequired,
-  onChangeInputText: PropTypes.func.isRequired,
+  onChangeStockItem: PropTypes.func.isRequired,
   onAddStock: PropTypes.func.isRequired,
-  onRemoveStock: PropTypes.func.isRequired,
+  onRemoveStockItem: PropTypes.func.isRequired,
   onStockFound: PropTypes.func.isRequired,
+  onAddStockItem: PropTypes.func.isRequired,
   onLoading: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-  found: PropTypes.bool.isRequired,
   stocklist: PropTypes.arrayOf(PropTypes.object),
 };
 
@@ -125,17 +145,16 @@ StockPageContainer.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  text: state.stock.text,
-  found: state.stock.found,
   stocklist: state.stock.stocklist,
 });
 
 const mapDispatchToProps = dispatch => ({
   onOpenModal: bindActionCreators(openModal, dispatch),
   onCloseModal: bindActionCreators(closeModal, dispatch),
-  onChangeInputText: bindActionCreators(changeInputText, dispatch),
+  onChangeStockItem: bindActionCreators(changeStockItem, dispatch),
   onAddStock: bindActionCreators(addStock, dispatch),
-  onRemoveStock: bindActionCreators(removeStock, dispatch),
+  onAddStockItem: bindActionCreators(addStockItem, dispatch),
+  onRemoveStockItem: bindActionCreators(removeStockItem, dispatch),
   onStockFound: bindActionCreators(stockFound, dispatch),
   onLoading: bindActionCreators(isLoading, dispatch),
 });

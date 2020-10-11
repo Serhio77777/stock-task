@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Grid,
-} from 'react-bootstrap';
+// import {
+//   Grid,
+// } from 'react-bootstrap';
 
 const Page = ({ children }) => (
-  <Grid>
+  <div>
     {children}
-  </Grid>
+  </div>
 );
 
 Page.propTypes = {

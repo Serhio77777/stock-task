@@ -10,12 +10,12 @@ const StockLisTable = ({ children }) => (
     <thead>
       <tr>
         <th>#</th>
-        <th>Code</th>
-        <th>Price</th>
-        <th>Exchange</th>
-        <th>diff</th>
-        <th>Trend</th>
-        <th></th>
+        <th>Unique Code</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Time in</th>
+        <th>Time Out</th>
+        <th>Owner/Company</th>
       </tr>
     </thead>
     <tbody>

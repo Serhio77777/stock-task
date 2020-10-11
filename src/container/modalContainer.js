@@ -30,11 +30,7 @@ class ModalContainer extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onAdd}>
-            {
-              isLoading ?
-                <img src="img/ring-alt.svg" height="15" alt="loader" /> :
-              'ADD'
-            }
+            Add
           </Button>
           <Button onClick={() => onCloseModal()}>Cancel</Button>
         </Modal.Footer>
